@@ -1,2 +1,7 @@
 *.pdf
 graph_theory_algorithms.pdf
+code/cpp/shortestPathBfs
+code/cpp/bfsIter
+code/cpp/usrIpDFSALR
+code/cpp/dfs_alr
+code/cpp/dfs_i
