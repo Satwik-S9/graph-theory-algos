@@ -93,4 +93,3 @@ if __name__ == '__main__':
             
     with open(OUTPUT_PATH, "a") as f:
         f.write(f"\nNo. of Nodes: {count}")
-            
