@@ -1,1 +1,2 @@
-0 1 2 4 3 
+Order of Traversal BFS: 0 1 2 4 3 
+Shortest path from 0 -> 3: [0, 1, 4, 3]
