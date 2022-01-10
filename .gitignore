@@ -3,3 +3,4 @@
 !*.*
 *.pdf
 graph_theory_algorithms.pdf
+__pycache__/
