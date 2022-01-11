@@ -43,10 +43,11 @@ namespace networks
 
 namespace helpers
 {
-    void printVector(std::vector<int> &v)
+    template <typename T>
+    void printVector(std::vector<T> &v)
     {
         std::cout << "\n";
-        for (int e : v)
+        for (T e : v)
             std::cout << e << " ";
         std::cout << std::endl;
     }
