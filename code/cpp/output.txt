@@ -1,2 +1,2 @@
-
-12 11 10 9 8 7 6 5 4 3 2 1 0 
+The Shortest path Array in the Given DAG is: 0 3 6 7 3 12 9 11 
+The shortest path to 7 is 11
