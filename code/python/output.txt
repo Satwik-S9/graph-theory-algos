@@ -1,1 +1,1 @@
-Length of the Shortest Path to exit is: 9
+([0, 3, 6, 7, 3, 12, 9, 11], 11)
