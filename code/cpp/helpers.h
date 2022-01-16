@@ -46,9 +46,19 @@ namespace helpers
     template <typename T>
     void printVector(std::vector<T> &v, std::string message="")
     {
-        std::cout << message;
+        std::cout << "\n" << message;
         for (T e : v)
             std::cout << e << " ";
+        std::cout << std::endl;
+    }
+
+    template <typename T>
+    void printArray(T arr[], std::string message="")
+    {
+        int size = *(&arr + 1) - arr;
+        std::cout << "\n" << message;
+        for (int i=0; i<size; i++)
+            std::cout << arr[i] << " ";
         std::cout << std::endl;
     }
 
