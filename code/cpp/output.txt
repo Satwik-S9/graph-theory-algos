@@ -1,2 +1,2 @@
-The Shortest path Array in the Given DAG is: 0 3 6 7 3 12 9 11 
-The shortest path to 7 is 11
+No. of connected components: 5
+The Components array is: 1 2 3 3 1 2 4 4 1 3 3 4 5 1 1 3 2 2 
