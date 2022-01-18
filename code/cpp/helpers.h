@@ -64,6 +64,15 @@ namespace helpers
 
     void printGraph(networks::Graph &graph)
     {
-        
+        std::cout << "\nAdjacency List of the graph: \n";
+        // std::cout << "NODE  NEIGHBOURS (node, cost)\n";
+        for (int i=0; i<graph.numNodes; i++)
+        {
+            std::cout << i << ": ";
+            for (auto edge : graph.adjList[i])
+            {
+                std::cout << "(" << edge.first << ", " << edge.second << "), ";
+            } std::cout << std::endl;
+        }
     }
 }
