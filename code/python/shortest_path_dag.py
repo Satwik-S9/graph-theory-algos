@@ -1,8 +1,8 @@
 import helpers as H
 
 # global variables
-INPUT_PATH = '/home/freyr/dev/GraphTheory/code/python/input.txt'
-OUTPUT_PATH = '/home/freyr/dev/GraphTheory/code/python/output.txt'
+INPUT_PATH = 'input.txt'
+OUTPUT_PATH = 'output.txt'
 
 # clearing the contents of the file if any
 open(OUTPUT_PATH, 'w').close()
