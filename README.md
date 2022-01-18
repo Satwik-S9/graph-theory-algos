@@ -7,5 +7,11 @@
   
   - Breadth First Search (Iterative).
   - Breadth First Search Shortest Path Problem.
-  - Depth First Search (Recursive and Iterative). 
-  - Depth First Search Count the total number of nodes in the Graph (Recursive and Iterative). 
+  - Depth First Search (Recursive and Iterative)
+  - Depth First Search Count the total number of nodes in the Graph (Recursive and Iterative)
+  - Find Connected Components
+  - Shortest Path for a Grid
+  - Shortest path Algorithm using BFS
+  - Shortest Path on a Directed Acyclic Graph
+  - Topological Sort Algorithm
+  - Djikstra's Algorithm
