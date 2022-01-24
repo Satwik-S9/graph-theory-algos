@@ -25,12 +25,13 @@ namespace networks
     class Graph
     {
     public:
-        int numNodes;
+        int numNodes, numEdges;
         std::map<int, std::vector<std::pair<int, int>>> adjList;
 
         Graph(int numNodes, std::vector<Edge> &edges, bool directed=false)
         {
             this->numNodes = numNodes;
+            numEdges = edges.size();
             for (Edge &edge: edges)
             {
                 adjList[edge.src].push_back({edge.dest, edge.cost});
@@ -44,12 +45,14 @@ namespace networks
     {
         int NMAX, N, *heap, *index, *keys;
 
-        void swap(int i, int j) {
+        void swap(int i, int j) 
+        {
             int t = heap[i]; heap[i] = heap[j]; heap[j] = t;
             index[heap[i]] = i; index[heap[j]] = j;
         }
 
-        void bubbleUp(int k)    {
+        void bubbleUp(int k)    
+        {
             while(k > 1 && keys[heap[k/2]] > keys[heap[k]])   
             {
                 swap(k, k/2);
