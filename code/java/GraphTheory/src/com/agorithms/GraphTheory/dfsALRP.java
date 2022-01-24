@@ -21,6 +21,7 @@ public class dfsALRP {
         public Edge(int src, int dest){
             this(src, dest, 1);
         }
+
     }
 
     // Graph class for representing a graph
@@ -35,10 +36,10 @@ public class dfsALRP {
             for (int i=0; i<numNodes; ++i)
                 adjList[i] = new LinkedList<>();
 
-                for (Edge edge : edges){
-                    adjList[edge.src].add(edge.dest);  // some problem in this line
-                    if (!directed)
-                        adjList[edge.dest].add(edge.src);
+            for (Edge edge : edges){
+                adjList[edge.src].add(edge.dest);  // some problem in this line
+                if (!directed)
+                    adjList[edge.dest].add(edge.src);
             }
         }
     }
