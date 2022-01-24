@@ -1,4 +1,1 @@
-Distance Array: [0, 4, 1, 7, 9, 10]
-Parents Array: [None, 2, 0, 1, 3, 4]                
-Shortest Path: [0, 2, 1, 3, 4, 5]
-Cost of Shortest Path: 10
+Distance Array is: [0, 5, -inf, -inf, -inf, 35, 40, -inf, 85, -inf]
