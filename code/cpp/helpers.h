@@ -1,11 +1,11 @@
 #pragma once
 
-#include<map>
-#include<queue>
-#include<string>
-#include<vector>
-#include<algorithm>
-#include<iostream>
+#include <map>
+#include <queue>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <iostream>
 
 namespace networks
 {
@@ -14,7 +14,7 @@ namespace networks
     public:
         int src, dest, cost;
 
-        Edge(int s, int d, int c=1)
+        Edge(int s, int d, int c = 1)
         {
             src = s;
             dest = d;
@@ -28,11 +28,11 @@ namespace networks
         int numNodes, numEdges;
         std::map<int, std::vector<std::pair<int, int>>> adjList;
 
-        Graph(int numNodes, std::vector<Edge> &edges, bool directed=false)
+        Graph(int numNodes, std::vector<Edge> &edges, bool directed = false)
         {
             this->numNodes = numNodes;
             numEdges = edges.size();
-            for (Edge &edge: edges)
+            for (Edge &edge : edges)
             {
                 adjList[edge.src].push_back({edge.dest, edge.cost});
                 if (!directed)
@@ -41,33 +41,37 @@ namespace networks
         }
     };
 
-    class IndexedMinPQ 
+    class IndexedMinPQ
     {
         int NMAX, N, *heap, *index, *keys;
 
-        void swap(int i, int j) 
+        void swap(int i, int j)
         {
-            int t = heap[i]; heap[i] = heap[j]; heap[j] = t;
-            index[heap[i]] = i; index[heap[j]] = j;
+            int t = heap[i];
+            heap[i] = heap[j];
+            heap[j] = t;
+            index[heap[i]] = i;
+            index[heap[j]] = j;
         }
 
-        void bubbleUp(int k)    
+        void bubbleUp(int k)
         {
-            while(k > 1 && keys[heap[k/2]] > keys[heap[k]])   
+            while (k > 1 && keys[heap[k / 2]] > keys[heap[k]])
             {
-                swap(k, k/2);
-                k = k/2;
+                swap(k, k / 2);
+                k = k / 2;
             }
         }
 
-        void bubbleDown(int k)  {
+        void bubbleDown(int k)
+        {
             int j;
-            while(2*k <= N) 
+            while (2 * k <= N)
             {
-                j = 2*k;
-                if(j < N && keys[heap[j]] > keys[heap[j+1]])
+                j = 2 * k;
+                if (j < N && keys[heap[j]] > keys[heap[j + 1]])
                     j++;
-                if(keys[heap[k]] <= keys[heap[j]])
+                if (keys[heap[k]] <= keys[heap[j]])
                     break;
                 swap(k, j);
                 k = j;
@@ -76,44 +80,44 @@ namespace networks
 
     public:
         // Create an empty MinIndexedPQ which can contain atmost NMAX elements
-        IndexedMinPQ(int NMAX)  
+        IndexedMinPQ(int NMAX)
         {
             this->NMAX = NMAX;
             N = 0;
             keys = new int[NMAX + 1];
             heap = new int[NMAX + 1];
             index = new int[NMAX + 1];
-            for(int i = 0; i <= NMAX; i++)
+            for (int i = 0; i <= NMAX; i++)
                 index[i] = -1;
         }
-        
-        ~IndexedMinPQ() 
+
+        ~IndexedMinPQ()
         {
-            delete [] keys;
-            delete [] heap;
-            delete [] index;
+            delete[] keys;
+            delete[] heap;
+            delete[] index;
         }
 
         // check if the PQ is empty
-        bool isEmpty()  
+        bool isEmpty()
         {
             return N == 0;
         }
 
         // check if i is an index on the PQ
-        bool contains(int i)    
+        bool contains(int i)
         {
             return index[i] != -1;
         }
 
         // return the number of elements in the PQ
-        int size()  
+        int size()
         {
             return N;
         }
 
         // associate key with index i; 0 < i < NMAX
-        void push(int i, int key) 
+        void push(int i, int key)
         {
             N++;
             index[i] = N;
@@ -128,36 +132,37 @@ namespace networks
         }
 
         // returns the index associated with the minimal key
-        int minIndex()  
+        int minIndex()
         {
             return heap[1];
         }
 
         // returns the minimal key
-        int minKey()    
+        int minKey()
         {
             return keys[heap[1]];
         }
 
         // delete the minimal key and return its associated index
         // Warning: Don't try to read from this index after calling this function
-        int deleteMin() 
+        int deleteMin()
         {
             int min = heap[1];
             swap(1, N--);
             bubbleDown(1);
             index[min] = -1;
-            heap[N+1] = -1;
+            heap[N + 1] = -1;
             return min;
         }
 
         // returns the key associated with index i
-        int keyOf(int i)    {
+        int keyOf(int i)
+        {
             return keys[i];
         }
 
         // change the key associated with index i to the specified value
-        void changeKey(int i, int key)  
+        void changeKey(int i, int key)
         {
             keys[i] = key;
             bubbleUp(index[i]);
@@ -165,21 +170,21 @@ namespace networks
         }
 
         // decrease the key associated with index i to the specified value
-        void decreaseKey(int i, int key)    
+        void decreaseKey(int i, int key)
         {
             keys[i] = key;
             bubbleUp(index[i]);
         }
 
         // increase the key associated with index i to the specified value
-        void increaseKey(int i, int key)    
+        void increaseKey(int i, int key)
         {
             keys[i] = key;
             bubbleDown(index[i]);
         }
 
         // delete the key associated with index i
-        void deleteKey(int i)   
+        void deleteKey(int i)
         {
             int ind = index[i];
             swap(ind, N--);
@@ -193,20 +198,22 @@ namespace networks
 namespace helpers
 {
     template <typename T>
-    void printVector(std::vector<T> &v, std::string message="")
+    void printVector(std::vector<T> &v, std::string message = "")
     {
-        std::cout << "\n" << message;
+        std::cout << "\n"
+                  << message;
         for (T e : v)
             std::cout << e << " ";
         std::cout << std::endl;
     }
 
     template <typename T>
-    void printArray(T arr[], std::string message="")
+    void printArray(T arr[], std::string message = "")
     {
         int size = *(&arr + 1) - arr;
-        std::cout << "\n" << message;
-        for (int i=0; i<size; i++)
+        std::cout << "\n"
+                  << message;
+        for (int i = 0; i < size; i++)
             std::cout << arr[i] << " ";
         std::cout << std::endl;
     }
@@ -215,13 +222,14 @@ namespace helpers
     {
         std::cout << "\nAdjacency List of the graph: \n";
         // std::cout << "NODE  NEIGHBOURS (node, cost)\n";
-        for (int i=0; i<graph.numNodes; i++)
+        for (int i = 0; i < graph.numNodes; i++)
         {
             std::cout << i << ": ";
             for (auto edge : graph.adjList[i])
             {
                 std::cout << "(" << edge.first << ", " << edge.second << "), ";
-            } std::cout << std::endl;
+            }
+            std::cout << std::endl;
         }
     }
 }
