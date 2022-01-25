@@ -40,25 +40,50 @@ class Graph:
     
 def bellman_ford(graph: Graph, start: int):
     distance = [float('inf') for _ in range(graph.num_nodes)]
+    parents = [None for _ in range(graph.num_nodes)]
     distance[start] = 0
     
     # go over the graph
     for _ in range(start, graph.num_nodes-1):
         for _, edges in graph.adj_list.items():
             for edge in edges:
-                if (distance[edge.src] + edge.cost < distance[edge.dest]): 
+                if (distance[edge.src] + edge.cost < distance[edge.dest]):
+                    parents[edge.dest] = edge.src 
                     distance[edge.dest] = distance[edge.src] + edge.cost
 
     # check for negative cycles
     for _ in range(start, graph.num_nodes-1):
         for _, edges in graph.adj_list.items():
             for edge in edges:
-                if (distance[edge.src] + edge.cost < edge.dest):
+                if (distance[edge.src] + edge.cost < distance[edge.dest]):
                     distance[edge.dest] = -float('inf') 
                     
-    return distance
+    return distance, parents
+
+def reconstruct_path(parents, dest):
+    path = []
+    i = dest
+    while i is not None:
+        path.append(i)
+        i = parents[i]
+        
+    path = path[::-1]
+    return path
+
+def shortest_path(graph, src, dest):
+    distance, parents = bellman_ford(graph, src)
+    path = reconstruct_path(parents, dest)
     
-            
+    # print(f"The Shortest path is: {path}")
+    
+    return distance[dest], path
+
+def check_neg_cycles(graph):
+    distance, _ = bellman_ford(graph, 0)
+    if (-float('inf')) in distance:
+        return True
+    
+    return False
     
 if __name__ == '__main__':
     with open(INPUT_PATH, 'r') as f:
@@ -78,5 +103,9 @@ if __name__ == '__main__':
     graph = Graph(num_nodes, edges, directed) 
     
     ans = bellman_ford(graph, 0)
+    sp = shortest_path(graph, 0, 8)
     with open(OUTPUT_PATH, 'a') as f:
-        f.write(f"Distance Array is: {ans}")
+        f.write(f"Distance Array is: {ans[0]}\nParents Array is: {ans[1]}\n")
+        f.write(f"The minimum cost to {8} is: {sp[0]},\nPath is: {sp[1]}")
+        if check_neg_cycles(graph):
+            f.write("\nThe Graph has Negative Cycles")
