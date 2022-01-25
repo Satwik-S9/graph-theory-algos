@@ -5,8 +5,9 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include "helpers.h"
 
-// defining necessary support data structure
+//* defining necessary support data structure
 class Edge
 {
 public:
@@ -41,9 +42,10 @@ public:
 };
 
 
-std::vector<int> bellmanFord(Graph &graph, int start)
+std::pair<std::vector<int>, std::vector<int>> bellmanFord(Graph &graph, int start)
 {
     std::vector<int> distance(graph.numNodes, INT_MAX);
+    std::vector<int> parents(graph.numNodes, -1);
 
     distance[start] = 0;
 
@@ -52,7 +54,10 @@ std::vector<int> bellmanFord(Graph &graph, int start)
         for (auto edges : graph.adjList)
             for (auto edge : edges.second)
                 if (distance[edge.src] + edge.cost < distance[edge.dest])
+                {
+                    parents[edge.dest] = edge.src;
                     distance[edge.dest] = distance[edge.src] + edge.cost;
+                }
     }
 
     // check for negative cycles
@@ -64,9 +69,41 @@ std::vector<int> bellmanFord(Graph &graph, int start)
                     distance[edge.dest] = INT_MIN; 
     }
 
-    return distance;
+    return {distance, parents};
 }
-//todo: Add shortest path method having reconstruct path and target.
+
+std::vector<int> reconstructPath(std::vector<int> parents, int dest)
+{
+    std::vector<int> path;
+    int i = dest;
+    while (i != -1)
+    {
+        path.push_back(i);
+        i = parents[i];
+    }
+    
+    std::reverse(path.begin(), path.end());
+    return path;
+}
+
+int shortestPath(Graph &graph, int src, int dest)
+{
+    std::pair<std::vector<int>, std::vector<int>> ans = bellmanFord(graph, src);
+    std::vector<int> path = reconstructPath(ans.second, dest);
+    helpers::printVector(path, "The Shortest path is: ");
+
+    return ans.first[dest];
+}
+
+bool checkNegCycles(Graph &graph)
+{
+    std::pair<std::vector<int>, std::vector<int>> ans = bellmanFord(graph, 0);
+    auto has_cycles = std::find(ans.first.begin(), ans.first.end(), INT_MIN);
+    
+    if (has_cycles != ans.first.end()) return true;
+
+    return false;
+}
 
 
 int main()
@@ -103,10 +140,15 @@ int main()
 
     Graph graph = Graph(numNodes, edges, directed);
 
-    std::vector<int> distance = bellmanFord(graph, 0);
+    std::pair<std::vector<int>, std::vector<int>> ans = bellmanFord(graph, 0);
 
-    for (int i=0; i<numNodes; i++)
-    std::cout << distance[i] << " ";
+    helpers::printVector(ans.first, "Distance array: ");
+    helpers::printVector(ans.second, "Parents array: ");
+
+    int sp = shortestPath(graph, 0, 8);
+    std::cout << "Shortest path to " << 8 << " is " << sp;
+
+    if (checkNegCycles(graph)) std::cout << "\nThe Graph has Negative Cycle(s)";
 
     return 0;
 }
