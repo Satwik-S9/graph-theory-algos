@@ -1,5 +1,0 @@
-Distance Array is: [0, 5, -inf, -inf, -inf, 35, 40, -10, -20, -inf]
-Parents Array is: [None, 0, 3, 2, 5, 1, 5, 6, 7, 4]
-The minimum cost to 8 is: -20,
-Path is: [0, 1, 5, 6, 7, 8]
-The Graph has Negative Cycles
