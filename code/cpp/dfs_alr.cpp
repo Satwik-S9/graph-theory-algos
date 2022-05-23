@@ -7,6 +7,10 @@
 
 #include <iostream>
 
+struct Node {
+
+};
+
 // data structure to store graph edge
 struct Edge
 {

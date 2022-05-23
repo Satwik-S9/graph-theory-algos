@@ -7,8 +7,11 @@
 #include <algorithm>
 #include <iostream>
 
-namespace networks
-{
+
+namespace networks {
+    
+    #define INF 1e7
+    
     class Edge
     {
     public:
@@ -26,17 +29,31 @@ namespace networks
     {
     public:
         int numNodes, numEdges;
-        std::map<int, std::vector<std::pair<int, int>>> adjList;
+        std::map<int, std::vector<std::pair<int, int>>> adjList; // adjacency list
+        std::vector<std::vector<int>> adjMatrix;  // adjacency matrix
 
-        Graph(int numNodes, std::vector<Edge> &edges, bool directed = false)
+        Graph(int numNodes, std::vector<Edge> &edges, bool directed=false, bool init_matrix=false)
         {
             this->numNodes = numNodes;
             numEdges = edges.size();
-            for (Edge &edge : edges)
+            if (!init_matrix)
+                for (Edge &edge : edges)
+                {
+                    adjList[edge.src].push_back({edge.dest, edge.cost});
+                    if (!directed)
+                        adjList[edge.dest].push_back({edge.src, edge.cost});
+                }
+
+            if (init_matrix)
             {
-                adjList[edge.src].push_back({edge.dest, edge.cost});
-                if (!directed)
-                    adjList[edge.dest].push_back({edge.src, edge.cost});
+                std::vector<std::vector<int>> adjMatrix(numNodes, std::vector<int>(numNodes, INF));
+                for (Edge &edge : edges)
+                {
+                    adjMatrix[edge.src][edge.dest] = edge.cost;
+                    if (!directed)
+                        adjMatrix[edge.dest][edge.src] = edge.cost;
+                }
+                this->adjMatrix = adjMatrix;
             }
         }
     };
